@@ -1,1 +1,21 @@
+# Omniverse Dashboard
+
+Single-file static dashboard + helper scripts to aggregate and monitor several GitHub Pages sites for the `rampaulsaini` account.
+
+## Features
+- Live iframe preview (browser)
+- GitHub repo metadata (via GitHub API) — server-side or browser with CORS limitations
+- Health checks, link-checker, and lightweight static analysis
+- Example GitHub Actions workflow to deploy & run audits
+
+## How to use
+1. Place `index.html` at repo root and `scripts/` folder alongside it.
+2. Commit and push to `main`.
+3. Enable GitHub Pages for the repository (if you want the dashboard live).
+4. Optionally configure `.github/workflows/pages.yml` to run audits on push.
+
+## Local usage (Node)
+Install dependencies:
+```bash
+npm install node-fetch@2 cheerio
 
