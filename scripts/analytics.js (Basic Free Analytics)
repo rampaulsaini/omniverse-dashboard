@@ -1,6 +1,16 @@
 // scripts/analytics.js
 window.OmniAnalytics = {
-  track:function(toolId){
+  track:function(toolId){// scripts/analytics.js
+window.OmniAnalytics = (function(){
+  function track(toolId){
+    const k = 'omnianal_'+toolId;
+    const v = parseInt(localStorage.getItem(k)||'0') + 1;
+    localStorage.setItem(k, v);
+    console.log(`[OmniAnalytics] ${toolId} run count = ${v}`);
+  }
+  return { track };
+})();
+
     const key = 'omniverse_analytics_'+toolId;
     let count = parseInt(localStorage.getItem(key)||'0');
     count++; localStorage.setItem(key,count);
