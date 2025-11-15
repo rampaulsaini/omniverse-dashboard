@@ -1,6 +1,200 @@
-omniverse-supreme/
-├── assets/                       (commit 1)
-├── scripts/                      (commit 2 + 3)
-├── index.html                    (commit 4)
-└── README.md                     (commit 5)
-index.html
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Omniverse — Live Pages Dashboard</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#98a0b3;--accent:#60a5fa}
+    html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:linear-gradient(180deg,#071025 0%, #081425 60%);color:#e6eef8}
+    header{padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;gap:12px;align-items:center}
+    h1{margin:0;font-size:18px}
+    .wrap{display:grid;grid-template-columns:380px 1fr;gap:18px;padding:18px}
+    .left{min-height:80vh}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:10px;margin-bottom:12px}
+    .site{display:flex;gap:8px;align-items:flex-start}
+    .site h3{margin:0;font-size:14px}
+    .meta{font-size:12px;color:var(--muted);margin-top:6px}
+    .preview{height:80vh;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+    iframe{width:100%;height:100%;border:0}
+    .controls{display:flex;gap:8px;align-items:center;margin-top:8px}
+    button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 8px;border-radius:8px;color:#e6eef8;cursor:pointer}
+    input{width:100%;padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef8}
+    footer{padding:12px 18px;color:var(--muted);font-size:13px}
+    .badge{background:rgba(255,255,255,0.03);padding:3px 7px;border-radius:999px;font-size:12px}
+    .error{color:#ffb4b4}
+    .analysis{font-size:13px;line-height:1.45;color:#d8e8ff}
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Omniverse — Live pages dashboard</h1>
+      <div style="font-size:12px;color:var(--muted)">यह पेज आपके GitHub Pages लिंक का live सारांश और preview दिखाता है</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <div class="badge">Live previews</div>
+      <div class="badge">GitHub API meta</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="left">
+      <div class="card">
+        <strong>Pages (fixed list)</strong>
+        <div class="meta">कृपया नीचे दिए गए सभी pages के नाम चुने और preview के लिए क्लिक करें — यह version local-browser पर काम करता है (GitHub API public repos के लिए metadata भी लाएगा)</div>
+      </div>
+
+      <div id="sites"></div>
+
+      <div class="card">
+        <strong>Deep-analysis checklist (automatic + manual)</strong>
+        <ol class="analysis">
+          <li>README और repo description — स्पष्ट है या नहीं?</li>
+          <li>Index page मौजूद है (index.html / index.md) — SEO और meta tags जांचें</li>
+          <li>GitHub repo metadata — stars, forks, last pushed date, license</li>
+          <li>CI/CD / workflow (GitHub Actions) और package manifests (package.json, requirements.txt)</li>
+          <li>Accessibility basics — alt tags, semantic HTML, color contrast</li>
+          <li>Performance hints — large images, unoptimized assets, usage of CDN</li>
+          <li>Security — mixed content, external scripts, CSP absence</li>
+          <li>Broken links, console errors — check in browser devtools</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <strong>Actions</strong>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="refreshAll">Refresh all metadata</button>
+          <button id="openAll">Open all in new tabs</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div>
+      <div class="card preview" id="previewCard">
+        <iframe id="previewFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <input id="selectedUrl" placeholder="Select a site from left to preview" readonly />
+        <button id="reloadFrame">Reload preview</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    नोट: मैं अभी आपके pages को server-side से fetch नहीं कर पाया। इस dashboard को अपने GitHub Pages repo पर host कर के लाइव देखें।<br>
+    अगर आप चाहें तो मैं हर repo का in-depth analysis कर दूँ — बस मुझे repo का README, package manifests, और कोई खास फाइलें paste कर दें या इस repo के सार्वजनिक नाम बताइए।
+  </footer>
+
+  <script>
+    // фиксированные ссылки, जो आपने भेजीं
+    const urls = [
+      "https://rampaulsaini.github.io/omniverse--ai-scripts-/",
+      "https://rampaulsaini.github.io/Omniverse-AI/",
+      "https://rampaulsaini.github.io/my-omniverse-store/",
+      "https://rampaulsaini.github.io/Omniverse/",
+      "https://rampaulsaini.github.io/Karbon-/",
+      "https://rampaulsaini.github.io/Omniverse-/",
+      "https://rampaulsaini.github.io/Koyab-Founding-Declaration-Omniversal-Manifesto/",
+      "https://rampaulsaini.github.io/rampaulsaini/",
+      "https://rampaulsaini.github.io/Omniverse-Platform-supreme-/",
+      "https://rampaulsaini.github.io/kit-app-template/",
+      "https://rampaulsaini.github.io/C-Labs/",
+      "https://rampaulsaini.github.io/Omnivers/",
+      "https://rampaulsaini.github.io/Omniver/"
+    ];
+
+    const sitesEl = document.getElementById('sites');
+    const iframe = document.getElementById('previewFrame');
+    const selectedUrl = document.getElementById('selectedUrl');
+
+    function repoNameFromUrl(u){
+      try{
+        const p = new URL(u).pathname.replace(/^\/+|\/+$/g,'');
+        // GitHub Pages often maps repo to first path segment
+        const slug = p.split('/')[0] || 'rampaulsaini.github.io';
+        return slug;
+      }catch(e){return null}
+    }
+
+    function createSiteCard(url){
+      const repo = repoNameFromUrl(url);
+      const el = document.createElement('div');
+      el.className = 'card site';
+      el.innerHTML = `
+        <div style="flex:1">
+          <h3 title="${url}">${repo}</h3>
+          <div class="meta" id="meta-${repo}">Loading metadata…</div>
+          <div class="controls">
+            <button data-url="${url}" class="previewBtn">Preview</button>
+            <button data-url="${url}" class="openBtn">Open</button>
+            <button data-repo="${repo}" class="metaBtn">Fetch repo metadata</button>
+          </div>
+        </div>
+      `;
+      sitesEl.appendChild(el);
+
+      el.querySelector('.previewBtn').addEventListener('click', ()=>{
+        selectedUrl.value = url;
+        iframe.src = url;
+      });
+      el.querySelector('.openBtn').addEventListener('click', ()=>{
+        window.open(url, '_blank');
+      });
+      el.querySelector('.metaBtn').addEventListener('click', ()=>{
+        fetchRepoMeta(repo, url);
+      });
+    }
+
+    function showMeta(repo, html){
+      const el = document.getElementById('meta-'+repo);
+      if(el) el.innerHTML = html;
+    }
+
+    async function fetchRepoMeta(repo, pageUrl){
+      // assumes username is rampaulsaini
+      const user = 'rampaulsaini';
+      let repoName = repo;
+      // if repo looks like user.github.io, map to user repo
+      if(repo.toLowerCase().includes('github.io')) repoName = user + '.github.io';
+      const api = `https://api.github.com/repos/${user}/${repoName}`;
+      showMeta(repo, 'Fetching GitHub repo info...');
+      try{
+        const res = await fetch(api);
+        if(!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        const data = await res.json();
+        const html = `
+          <div><strong>${data.full_name}</strong> • ${data.private? 'private' : 'public'}</div>
+          <div class="meta">⭐ ${data.stargazers_count} • Forks: ${data.forks_count} • Updated: ${new Date(data.pushed_at).toLocaleString()}</div>
+          <div class="meta">License: ${data.license?data.license.spdx_id:'none'} • Default branch: ${data.default_branch}</div>
+          <div style="margin-top:6px"><a href="${data.html_url}" target="_blank">Open repo on GitHub</a> • <a href="${pageUrl}" target="_blank">Open site</a></div>
+        `;
+        showMeta(repo, html);
+      }catch(err){
+        showMeta(repo, `<span class="error">Could not fetch repo metadata: ${err.message}</span> <div class="meta">(If repo name is different from page slug, fetch will fail — update mapping)</div>`);
+      }
+    }
+
+    // build list
+    urls.forEach(u=>createSiteCard(u));
+
+    document.getElementById('reloadFrame').addEventListener('click', ()=>{
+      if(iframe.src) iframe.contentWindow.location.reload();
+    });
+
+    document.getElementById('refreshAll').addEventListener('click', ()=>{
+      urls.forEach(u=>{
+        const repo = repoNameFromUrl(u);
+        fetchRepoMeta(repo, u);
+      })
+    });
+
+    document.getElementById('openAll').addEventListener('click', ()=>{
+      urls.forEach(u=>window.open(u,'_blank'));
+    });
+
+  </script>
+</body>
+  </html>
+  
