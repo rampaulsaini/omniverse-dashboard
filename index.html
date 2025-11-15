@@ -195,6 +195,113 @@
     });
 
   </script>
+
+
+  <!-- ADDITIONAL REPO FILES & TEMPLATES (START) -->
+  <section style="padding:18px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border-top:1px solid rgba(255,255,255,0.02)">
+    <div style="max-width:980px;margin:0 auto;color:#d8e8ff">
+      <h2 style="margin:6px 0">Repository structure & file templates</h2>
+      <p class="meta">नीचे repo में रखने योग्य recommended files और templates दिए गए हैं — इन्हें copy/paste करके अपनी repo में डाल दें।</p>
+
+      <h3>1) Recommended folder structure</h3>
+      <pre style="background:#021225;padding:12px;border-radius:8px;overflow:auto">omniverse-dashboard/
+ ├── index.html         ← (पहला, यही dashboard)
+ ├── README.md          ← (project intro + usage)
+ ├── assets/
+ │    ├── logo.svg
+ │    └── favicon.ico
+ ├── scripts/
+ │    └── health-check.js
+ └── .github/
+      └── workflows/
+           └── pages.yml  ← (GitHub Pages deployment + optional checks)
+</pre>
+
+      <h3>2) README.md (template)</h3>
+      <pre style="background:#021225;padding:12px;border-radius:8px;overflow:auto"># Omniverse Dashboard
+
+This repository hosts a single-file **static dashboard** that aggregates and previews multiple GitHub Pages sites for the `rampaulsaini` account.
+
+## Features
+- Live iframe preview of configured pages
+- Fetch GitHub repo metadata (stars, forks, last push, license)
+- Buttons: refresh metadata, open all, reload preview
+
+## How to use
+1. Upload `index.html` to this repo's root.
+2. Go to **Settings → Pages** and set the branch to `main` and folder to `/(root)`.
+3. Visit `https://<your-user>.github.io/omniverse-dashboard/` to see the control center.
+
+## Customize
+- Edit `index.html` → `urls` array to add/remove pages.
+- Adjust mapping in `repoNameFromUrl()` if your repo names differ from page slugs.
+</pre>
+
+      <h3>3) .github/workflows/pages.yml (template)</h3>
+      <pre style="background:#021225;padding:12px;border-radius:8px;overflow:auto">name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+</pre>
+
+      <h3>4) scripts/health-check.js (optional)</h3>
+      <pre style="background:#021225;padding:12px;border-radius:8px;overflow:auto">/**
+ * Simple fetch-based health check for each site — can be run in-browser (console) or in Node
+ */
+async function checkSites(urls){
+  const results = [];
+  for(const u of urls){
+    try{
+      const r = await fetch(u, {method:'HEAD', mode:'no-cors'});
+      results.push({url:u, status: r.status || 'no-cors'})
+    }catch(e){
+      results.push({url:u, status: 'error', error: e.message || e});
+    }
+  }
+  return results;
+}
+
+// Usage (in browser console): checkSites(["https://example.com"]).then(console.log);
+</pre>
+
+      <h3>5) favicon + logo</h3>
+      <p class="meta">assets/logo.svg और assets/favicon.ico रखें — small 32×32 favicon और simple svg logo पर्याप्त है।</p>
+
+      <h3>6) Quick deployment steps</h3>
+      <ol class="analysis">
+        <li>Create new repo named <code>omniverse-dashboard</code>.</li>
+        <li>Copy `index.html`, `README.md`, `.github/workflows/pages.yml` और `scripts/health-check.js` (optional) को कॉमिट करें।</li>
+        <li>Push to <code>main</code> branch.</li>
+        <li>Enable GitHub Pages from repo settings → site will be available at <code>https://rampaulsaini.github.io/omniverse-dashboard/</code></li>
+      </ol>
+
+      <h3>7) Next improvements I can add (आपने पूछा था — मैं अभी कर सकता हूँ)</h3>
+      <ul>
+        <li>Auto-mapping UI — repo slug mismatch को handle करने के लिए small form</li>
+        <li>Health-check panel with last-200ms/timeout flags</li>
+        <li>Console error detector (requires headless browser on CI or remote check)</li>
+        <li>Light/dark theme toggle + responsive layout tweaks</li>
+      </ul>
+
+      <p class="meta">यदि आप चाहें तो मैं इन templates को अलग-अलग files के रूप में यहाँ paste कर दूँ — या मैं आपके लिए GitHub-compatible zip बना कर दे सकता/दे सकती हूँ (आपके approval के बाद)।</p>
+    </div>
+  </section>
+
+  <!-- ADDITIONAL REPO FILES & TEMPLATES (END) -->
+
 </body>
-    </html>
-    
+  </html>
+  
