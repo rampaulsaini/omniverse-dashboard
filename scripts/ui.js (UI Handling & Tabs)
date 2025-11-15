@@ -1,1 +1,54 @@
+// scripts/ui.js
+window.OmniUI = {
+  init:function(){
+    const tabsEl = document.getElementById('toolTabs');
+    const panelsEl = document.getElementById('toolPanels');
+    OmniTools.tools.forEach((t,i)=>{
+      const btn = document.createElement('button');
+      btn.textContent = t.name; btn.dataset.id = t.id;
+      if(i===0) btn.classList.add('active');
+      btn.addEventListener('click',()=>{OmniUI.showPanel(t.id)});
+      tabsEl.appendChild(btn);
+
+      const panel = document.createElement('div');
+      panel.id = 'panel-'+t.id; panel.classList.add('tool-panel');
+      if(i===0) panel.classList.add('active');
+      panel.innerHTML = `
+        <h3>${t.name}</h3><p>${t.description}</p>
+        <label>Input JSON (name, skills, etc.)</label>
+        <textarea id="input-${t.id}">{"name":"John Doe"}</textarea>
+        <button class="run-btn" onclick="OmniUI.runTool('${t.id}')">Run Tool</button>
+        <textarea id="output-${t.id}" readonly placeholder="Output will appear here..."></textarea>
+        <button class="download-btn" onclick="OmniUI.download('${t.id}')">Download Output</button>
+      `;
+      panelsEl.appendChild(panel);
+    });
+  },
+  showPanel:function(id){
+    document.querySelectorAll('.tool-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tool-tabs button').forEach(b=>b.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+    document.querySelector(`.tool-tabs button[data-id='${id}']`).classList.add('active');
+  },
+  runTool: async function(id){
+    const tool = OmniTools.tools.find(t=>t.id===id);
+    if(!tool) return;
+    const inputEl = document.getElementById('input-'+id);
+    const outputEl = document.getElementById('output-'+id);
+    let input={};
+    try{input=JSON.parse(inputEl.value);}catch(e){input={}};
+    outputEl.value='Running...';
+    const result = await tool.run(input);
+    outputEl.value=result;
+    OmniAnalytics.track(id);
+  },
+  download:function(id){
+    const outputEl = document.getElementById('output-'+id);
+    const blob = new Blob([outputEl.value],{type:'text/plain'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download=id+'-output.txt';
+    link.click();
+  }
+};
 
