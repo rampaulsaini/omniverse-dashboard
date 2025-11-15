@@ -300,8 +300,71 @@ async function checkSites(urls){
     </div>
   </section>
 
+        <h3>8) .github/workflows/pages.yml (with lightweight audits)</h3>
+      <pre style="background:#021225;padding:12px;border-radius:8px;overflow:auto">name: Deploy & Audit Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: GITHUB_TOKEN_PLACEHOLDER
+          publish_dir: ./
+
+  audit:
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: node-version: '18'
+      - name: Install deps
+        run: npm install node-fetch
+      - name: Run link-check and analyze (example)
+        run: node scripts/link-checker.js || true
+</pre>
+
+      <h3>9) Repo slug mapping suggestions</h3>
+      <p class="meta">आपकी दिए हुए file-list से लगता है कि repo slugs कुछ इस तरह हो सकते हैं — पर सही mapping तभी आएगा जब आप हर GitHub repo का नाम confirm कर दें। (उदाहरण mapping)</p>
+      <pre style="background:#021225;padding:12px;border-radius:8px;overflow:auto">// suggested manual map (in index.html -> repoNameFromUrl)
+const repoMap = {
+  'omniverse--ai-scripts-': 'Omniverse-AI-scripts',
+  'Omniverse-AI': 'Omniverse-AI',
+  'my-omniverse-store': 'my-omniverse-store',
+  'Omniverse': 'Omniverse',
+  'Karbon-': 'Karbon',
+  'Omniverse-': 'Omniverse-',
+  'Koyab-Founding-Declaration-Omniversal-Manifesto': 'Koyab-Founding-Declaration-Omniversal-Manifesto',
+  'rampaulsaini': 'rampaulsaini.github.io',
+  'Omniverse-Platform-supreme-': 'Omniverse-Platform-supreme',
+  'kit-app-template': 'kit-app-template',
+  'C-Labs': 'C-Labs',
+  'Omnivers': 'Omnivers',
+  'Omniver': 'Omniver'
+};
+</pre>
+
+      <h3>10) Next steps — मैं क्या कर सकता/सकती हूँ अभी</h3>
+      <ol class="analysis">
+        <li>यदि आप चाहें तो मैं इन scripts को अलग-अलग फ़ाइलों के रूप में यहाँ generate करके दे दूँ (आप कहें तो ZIP भी बना दूँ)।</li>
+        <li>मैं एक automated audit report टेम्पलेट बना सकता/सकती हूँ जो हर repo के लिए CSV/JSON आउटपुट दे — इसे CI में रन करवा सकते हैं।</li>
+        <li>अगर आप repo के exact public names दे दें, मैं dashboard की `repoMap` और `urls` array को auto-fill कर दूँ और metadata fetch को validate कर दूँ।</li>
+      </ol>
+
+      <p class="meta">यदि आप चाहते हैं मैं अभी आपके लिए अलग-अलग script files generate कर दूँ और यहाँ paste कर दूँ — बताइए कौन से files पहले चाहिए (उदाहरण: <code>scripts/metadata-fetcher.js</code>, <code>scripts/link-checker.js</code>, <code>scripts/analyze.js</code>)।</p>
+    </div>
+  </section>
+
   <!-- ADDITIONAL REPO FILES & TEMPLATES (END) -->
 
 </body>
-  </html>
+    </html>
   
