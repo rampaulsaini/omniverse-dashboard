@@ -1,4 +1,9 @@
-/* -----------------------------
+/* -<style>
+  #repo-templates { max-height: 0; overflow: hidden; transition: max-height .28s ease; }
+  #repo-templates.open { max-height: 2000px; /* large enough */ }
+  #templatesToggle { position: fixed; right: 18px; bottom: 18px; z-index:9999; padding:8px 10px; border-radius:8px; background:#0b1220; color:#e6eef8; border:1px solid rgba(255,255,255,0.04); cursor:pointer; }
+</style>
+----------------------------
    dashboard-style.css
    ----------------------------- */
 
