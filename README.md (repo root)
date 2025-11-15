@@ -1,3 +1,24 @@
+# Omniverse AI Marketplace
+
+Zero-cost AI Tools Marketplace — fully hosted on GitHub Pages.
+
+## Tools
+- Resume Generator
+- Bio Generator
+- Script Writer
+- Notes Generator
+- Business Idea Generator
+
+## Usage
+1. Open https://YOURUSERNAME.github.io/omniverse-marketplace/
+2. Select a tool, edit JSON input, click Run
+3. Copy output or click Download
+4. Optional: Donate / Pay for premium templates
+
+## Monetization
+- Free tool usage with optional tip/donation
+- Pay-per-download / subscription for premium templates
+- Later integration with AI Automation Services & Autonomous Agents
 # Omniverse Dashboard
 
 Single-file static dashboard + helper scripts to aggregate and monitor several GitHub Pages sites for the `rampaulsaini` account.
