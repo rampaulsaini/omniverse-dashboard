@@ -1,6 +1,26 @@
 Omniverse-AI/
 ├─ analytics.html
-├─ scripts-stage7.js   ✅ (no spaces!)
+├─ scripts-stage7.js   ✅ (// scripts/scripts-stage7.js
+// Stage7 routines for Omniverse pipeline — placeholder & examples
+
+function stage7RunAudit(siteUrl) {
+  // Example: call a serverless endpoint that runs link-check + analyze
+  // Replace with your real endpoint or run local Node scripts
+  const endpoint = `/api/run-audit?url=${encodeURIComponent(siteUrl)}`;
+  return fetch(endpoint).then(r => r.json());
+}
+
+function stage7RenderMetrics(containerEl, metrics) {
+  containerEl.innerHTML = `
+    <div>Title: ${metrics.title || '—'}</div>
+    <div>Images: ${metrics.images || 0}</div>
+    <div>Scripts: ${metrics.scripts || 0}</div>
+    <div>Length: ${metrics.length}</div>
+  `;
+}
+
+if (typeof module !== 'undefined') module.exports = { stage7RunAudit, stage7RenderMetrics };
+  )
 ├─ assets/
 ├─ style.css
 ├─ index.html
