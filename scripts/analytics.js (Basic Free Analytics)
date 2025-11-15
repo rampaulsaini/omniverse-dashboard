@@ -1,1 +1,10 @@
+// scripts/analytics.js
+window.OmniAnalytics = {
+  track:function(toolId){
+    const key = 'omniverse_analytics_'+toolId;
+    let count = parseInt(localStorage.getItem(key)||'0');
+    count++; localStorage.setItem(key,count);
+    console.log(`[Analytics] Tool ${toolId} used ${count} times`);
+  }
+};
 
