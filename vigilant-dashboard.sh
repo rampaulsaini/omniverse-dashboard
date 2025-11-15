@@ -1,4 +1,23 @@
-#!/bin/bash
+#!/bin/bash#!/usr/bin/env bash
+# vigilant-dashboard.sh - quick health check for configured sites
+SITES=(
+  "https://rampaulsaini.github.io/Omniverse/"
+  "https://rampaulsaini.github.io/Omniverse-AI/"
+  "https://rampaulsaini.github.io/my-omniverse-store/"
+  "https://rampaulsaini.github.io/Omniverse-Platform-supreme-/"
+  # add more here
+)
+
+for s in "${SITES[@]}"; do
+  echo "----- Checking: $s -----"
+  # -I for headers, -L follow redirects, --max-time 6 seconds
+  curl -I -L --max-time 6 "$s" 2>/dev/null | sed -n '1,5p'
+  if [ $? -ne 0 ]; then
+    echo "ERROR: couldn't reach $s"
+  fi
+  echo
+done
+
 # -----------------------------
 # vigilant-dashboard.sh
 # -----------------------------
