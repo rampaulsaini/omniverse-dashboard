@@ -1,4 +1,9 @@
-<!doctype html>
+<<!-- ... earlier content ... -->
+<section id="repo-templates" style="padding:18px; ...">
+  <!-- existing templates content here -->
+</section>
+<!-- ... -->
+>
 <html lang="hi">
 <head>
   <meta charset="utf-8" />
