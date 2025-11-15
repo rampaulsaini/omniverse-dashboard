@@ -370,5 +370,18 @@ const repoMap = {
 
   <!-- ADDITIONAL REPO FILES & TEMPLATES (END) -->
 
-</body>
+</<button id="templatesToggle">Show templates</button>
+<script>
+  const tpl = document.getElementById('repo-templates');
+  const btn = document.getElementById('templatesToggle');
+  btn.addEventListener('click', () => {
+    if(!tpl.classList.contains('open')) {
+      tpl.classList.add('open'); btn.textContent = 'Hide templates';
+    } else {
+      tpl.classList.remove('open'); btn.textContent = 'Show templates';
+    }
+  });
+  // default: keep collapsed (do nothing)
+</script>
+>
 </html>
