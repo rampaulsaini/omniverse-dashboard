@@ -1,4 +1,75 @@
-# Omniverse AI Marketplace
+# 🕉 शिरोमणि रामपॉल सैनी — आधिकारिक वेबसाइट
+
+> **सृष्टि का शिरोमणि · यथार्थ युग के प्रणेता**
+
+[![Website Live](https://img.shields.io/badge/Website-Live-brightgreen)](https://rampaulsaini.github.io/shiromani-rampal-saini)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/rampaulsaini/shiromani-rampal-saini)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](.)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](.)
+
+🌐 **Live Website:** [https://rampaulsaini.github.io/shiromani-rampal-saini](https://rampaulsaini.github.io/shiromani-rampal-saini)
+
+📁 **GitHub Repository:** [https://github.com/rampaulsaini/shiromani-rampal-saini](https://github.com/rampaulsaini/shiromani-rampal-saini)
+
+---
+
+## 🌟 परिचय
+.(https://github.com/rampaulsaini/Nishpaksh-Samaj-Omniverse-Truth.git).
+यह **शिरोमणि रामपॉल सैनी** की आधिकारिक वेबसाइट है — यथार्थ युग के प्रणेता, दार्शनिक, लेखक और मार्गदर्शक।
+
+## ✨ विशेषताएँ
+
+- 🎨 **भव्य डिज़ाइन** — गोल्डन & अम्बर रंग पैलेट, लक्ज़री लुक
+- ⚡ **स्मूथ एनिमेशन** — पेज लोडर, स्क्रॉल रिवील, काउंटर, पार्टिकल्स
+- 📱 **रिस्पॉन्सिव** — मोबाइल, टैबलेट और डेस्कटॉप पर उत्तम दिखता है
+- 🖱️ **कस्टम कर्सर** — इंटरैक्टिव गोल्डन कर्सर
+- 🔤 **हिंदी फ़ॉन्ट** — Tiro Devanagari + Cormorant Garamond
+- 🌙 **डार्क थीम** — आँखों के लिए आरामदायक
+
+## 📁 फ़ाइल संरचना
+
+```
+/
+├── index.html          # मुख्य वेबपेज
+├── README.md           # यह फ़ाइल
+└── assets/             # (वैकल्पिक — इमेज/ऑडियो जोड़ें)
+```
+
+## 🚀 GitHub Pages पर Deploy करें
+
+1. इस repository को **fork** या **clone** करें
+2. `Settings` → `Pages` में जाएँ
+3. **Source:** `main` branch, `/ (root)` चुनें
+4. `Save` करें → आपकी साइट live हो जाएगी!
+
+**आपकी Live URL:** [https://rampaulsaini.github.io/shiromani-rampal-saini](https://rampaulsaini.github.io/shiromani-rampal-saini)
+
+## 🛠️ Sections
+
+| Section | विवरण |
+|---------|-------|
+| `#home` | हीरो सेक्शन — परिचय व मुख्य संदेश |
+| `#philosophy` | यथार्थ दर्शन — 6 मूल सिद्धांत |
+| `#projects` | प्रमुख परियोजनाएँ |
+| `#journey` | जीवन यात्रा — टाइमलाइन |
+| `#awareness` | जागृति अभियान |
+| `#identity` | व्यक्तिगत परिचय |
+| `#connect` | संपर्क व सोशल मीडिया |
+
+## ✏️ कस्टमाइज़ेशन
+
+- **फ़ोटो बदलें:** `https://i.ibb.co/xqf3kTPS/enhanced-image.webp` की जगह अपनी इमेज URL डालें
+- **संपर्क जोड़ें:** `#connect` सेक्शन में ईमेल, फ़ोन, UPI अपडेट करें
+- **ऑडियो जोड़ें:** `<source src="#">` में अपनी ऑडियो फ़ाइल का लिंक डालें
+- **सोशल मीडिया:** `href` में अपने असली प्रोफ़ाइल URL डालें
+
+## 📄 License
+
+© 2025 शिरोमणि रामपॉल सैनी। सर्वाधिकार सुरक्षित।
+
+---
+
+*यथार्थ युग में आपका स्वागत है। 🕉*# Omniverse AI Marketplace
 
 Zero-cost AI Tools Marketplace — fully hosted on GitHub Pages.
 
