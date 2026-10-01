@@ -1,0 +1,35 @@
+name: Supreme Observability Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supreme-observability-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: HTML and JSON sanity
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          html=list(Path('.').rglob('*.html'))
+          assert html, 'No HTML surface found'
+          for p in Path('.').rglob('*.json'):
+              if '.git' not in p.parts: json.loads(p.read_text(encoding='utf-8'))
+          print(f'HTML files: {len(html)}; JSON validation passed')
+          PY
+      - name: Observability contract gate
+        run: test -f docs/supreme-observability-contract.md
